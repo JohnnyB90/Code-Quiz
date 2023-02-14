@@ -1,0 +1,42 @@
+body {
+    display: flexbox;
+}
+#highscores {
+    color: purple;
+    font-size: larger;
+    font-style: sans-serif, serif, monospace;
+}
+
+#timer-display {
+    color: purple;
+    font-size: larger;
+}
+
+h1 {
+    font-size: 300%;
+    font-weight: 900;
+    text-align: center;
+    font-style: sans-serif, serif, monospace;
+}
+
+p {
+    text-align: center;
+    font-weight:900;
+    font-size: 125%;
+    word-wrap: normal;
+    font-style: sans-serif, serif, monospace;
+}
+
+#start-paragraph-container {
+    margin: 0 auto;
+    width: 50%;
+    text-align: center;
+    font-style: sans-serif, serif, monospace;
+}
+
+#start {
+    border: solid;
+    border-radius: 50px;
+    padding: 1%;
+    background-color: purple;
+}
