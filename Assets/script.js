@@ -67,24 +67,68 @@ startButton.addEventListener("click", function () {
   startContainer.appendChild(questionContainer);
 
   let currentQuestionIndex = 0;
+ 
+  // Beginning of the timer function and variable declarations
+  // set time to 2 minutes (120 seconds)
+  let time = 120;
+
+  // create timer element and display initial time
+  const timerEl = document.getElementById("timer-display");
+  timerEl.textContent = "Time: " + formatTime(time);
+
+// decrease time every second using setInterval
+const timerInterval = setInterval(function() {
+  time--;
+  timerEl.textContent = "Time: " + formatTime(time);
+  if (time <= 0) {
+    // clear the interval and end the quiz if time runs out
+    clearInterval(timerInterval);
+    questionEl.textContent = "Game Over!";
+    nextButton.remove();
+    const tryAgain = document.createElement("button");
+    tryAgain.classList.add("quiz-button", "try-again-button");
+    tryAgain.textContent = "Try Again";
+    const viewHighscoresButton = document.createElement("button");
+    viewHighscoresButton.classList.add(
+      "quiz-button",
+      "view-highscores-button"
+    );
+    viewHighscoresButton.textContent = "View Highscores";
+    const buttonContainer = document.createElement("div");
+    buttonContainer.classList.add("button-container");
+    buttonContainer.appendChild(tryAgain);
+    buttonContainer.appendChild(viewHighscoresButton);
+    questionContainer.appendChild(buttonContainer);
+  }
+}, 1000);
+
+// function to format time in "00:00" format
+function formatTime(time) {
+  let minutes = Math.floor(time / 60);
+  let seconds = time % 60;
+  minutes = minutes < 10 ? "0" + minutes : minutes;
+  seconds = seconds < 10 ? "0" + seconds : seconds;
+  return minutes + ":" + seconds;
+}
 
   // The next button event listener to change the questions
   nextButton.addEventListener("click", function () {
     if (questions[currentQuestionIndex] === undefined) {
       questionEl.textContent = "Game Over!";
       nextButton.remove();
+      clearInterval(timerInterval);
       // add the "quiz-button" and "try-again-button" classes
       const tryAgain = document.createElement("button");
       tryAgain.classList.add("quiz-button", "try-again-button");
       tryAgain.textContent = "Try Again";
+      // Try again button will now take the user back to the start quiz 
+      tryAgain.addEventListener("click", function() {
+        location.reload();
+      });
       // add the "quiz-button" and "view-highscores-button" classes
       const viewHighscoresButton = document.createElement("button");
-      viewHighscoresButton.classList.add(
-        "quiz-button",
-        "view-highscores-button"
-      );
+      viewHighscoresButton.classList.add( "quiz-button", "view-highscores-button" );
       viewHighscoresButton.textContent = "View Highscores";
-
       const buttonContainer = document.createElement("div");
       buttonContainer.classList.add("button-container");
       buttonContainer.appendChild(tryAgain);
@@ -99,3 +143,6 @@ startButton.addEventListener("click", function () {
     // Add an if statement for correct questions add time and +1 the score, incorrect questions remove time and -1 the score.
   });
 });
+
+
+
