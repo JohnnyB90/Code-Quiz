@@ -8,7 +8,7 @@ const questions = [
   "2. Where is the correct place to insert a JavaScript?",
   '3. What is the correct syntax for referring to an external script called "xxx.js"?',
   "4. The external JavaScript file must contain the <script> tag.",
-  '5. How do you write "Hello World" in an alert box?',
+  '5. How do you write "Hello World" in an alert box?'
 ];
 
 // Anwsers
@@ -16,7 +16,7 @@ let answers1 = {
   a: "<js>",
   b: "<scripting",
   c: "script",
-  d: "<javascript>",
+  d: "<javascript>"
 };
 
 let answers2 = {
@@ -28,30 +28,31 @@ let answers2 = {
 let answers3 = {
   a: '<script name="xxx.js">',
   b: '<script src="xxx.js"> ',
-  c: '<script href="xxx.js">',
+  c: '<script href="xxx.js">'
 };
 
 let answers4 = {
   a: "True",
-  b: "False",
+  b: "False"
 };
 
 let answers5 = {
   a: 'msgBox("Hello World");',
   b: 'alertBox("Hello World");',
   c: 'alert("Hello World");',
-  d: 'msg("Hello World");',
+  d: 'msg("Hello World");'
 };
 
 // Start button event listener
 const startButton = document.getElementById("start");
-startButton.classList.add("start-quiz-button"); // add the "start-quiz-button" class to the "Start Quiz" button
+// add the "start-quiz-button" class to the "Start Quiz" button
+startButton.classList.add("start-quiz-button");
 startButton.addEventListener("click", function () {
   const startContainer = document.getElementById("start-paragraph-container");
   startContainer.innerHTML = ""; // remove the start button and paragraph
 
   const questionContainer = document.createElement("div");
-  const questionEl = document.createElement("p");
+  questionEl = document.createElement("p");
 
   // Set the initial question
   questionEl.textContent = questions[0];
