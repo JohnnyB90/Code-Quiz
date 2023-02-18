@@ -57,6 +57,7 @@ startButton.addEventListener("click", function () {
 
   // Creates a next button
   const nextButton = document.createElement("button");
+  nextButton.classList.add("quiz-button");
   nextButton.textContent = "Next";
 
   // Creates a questions container for display the next questions
@@ -71,9 +72,20 @@ startButton.addEventListener("click", function () {
     if (questions[currentQuestionIndex] === undefined) {
       questionEl.textContent = "Game Over!";
       nextButton.remove();
+      const tryAgain = document.createElement("button");
+      tryAgain.classList.add("quiz-button")
+      tryAgain.textContent = "Try Again";
+      questionContainer.appendChild(tryAgain);
       const viewHighscoresButton = document.createElement("button");
+      viewHighscoresButton.classList.add("quiz-button")
       viewHighscoresButton.textContent = "View Highscores";
       questionContainer.appendChild(viewHighscoresButton);
+      const buttonContainer = document.createElement("div");
+      const finishButton = document.createElement("div"); 
+      buttonContainer.classList.add("button-container");
+      buttonContainer.appendChild(tryAgain);
+      buttonContainer.appendChild(viewHighscoresButton);
+      questionContainer.appendChild(buttonContainer);
     } else {
       questionEl.textContent = questions[currentQuestionIndex];
       currentQuestionIndex++;
