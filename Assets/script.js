@@ -32,15 +32,15 @@ let answers3 = {
 };
 
 let answers4 = {
-  a: 'True',
-  b: 'False',
+  a: "True",
+  b: "False",
 };
 
 let answers5 = {
   a: 'msgBox("Hello World");',
   b: 'alertBox("Hello World");',
   c: 'alert("Hello World");',
-  d: 'msg("Hello World");'
+  d: 'msg("Hello World");',
 };
 
 // Start button event listener
@@ -73,13 +73,16 @@ startButton.addEventListener("click", function () {
     if (questions[currentQuestionIndex] === undefined) {
       questionEl.textContent = "Game Over!";
       nextButton.remove();
-
+      // add the "quiz-button" and "try-again-button" classes
       const tryAgain = document.createElement("button");
-      tryAgain.classList.add("quiz-button", "try-again-button"); // add the "quiz-button" and "try-again-button" classes
+      tryAgain.classList.add("quiz-button", "try-again-button");
       tryAgain.textContent = "Try Again";
-
+      // add the "quiz-button" and "view-highscores-button" classes
       const viewHighscoresButton = document.createElement("button");
-      viewHighscoresButton.classList.add("quiz-button", "view-highscores-button"); // add the "quiz-button" and "view-highscores-button" classes
+      viewHighscoresButton.classList.add(
+        "quiz-button",
+        "view-highscores-button"
+      );
       viewHighscoresButton.textContent = "View Highscores";
 
       const buttonContainer = document.createElement("div");
@@ -87,11 +90,12 @@ startButton.addEventListener("click", function () {
       buttonContainer.appendChild(tryAgain);
       buttonContainer.appendChild(viewHighscoresButton);
       questionContainer.appendChild(buttonContainer);
+    // Display the questions as the next button is clicked
     } else {
       questionEl.textContent = questions[currentQuestionIndex];
       currentQuestionIndex++;
     }
 
-    // Add an if statement for correct questions add time and +1 the score, incorrect questions remove time and -1 the score. 
+    // Add an if statement for correct questions add time and +1 the score, incorrect questions remove time and -1 the score.
   });
 });

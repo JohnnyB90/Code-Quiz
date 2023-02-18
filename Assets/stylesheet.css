@@ -11,7 +11,15 @@ body {
     background-color: #222;
     color: #fff;
   }
-  
+
+  #highscorePage {
+    padding: 10px 20px;
+    background-color: #FFC3A1;
+    color: #222;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
   #highscores {
     padding: 10px 20px;
     background-color: #FFC3A1;
@@ -60,8 +68,6 @@ body {
     padding: 10px 20px;
     font-size: 20px;
     font-weight: bold;
-    /* max-width: 10%;
-    width: 10%; */
   }
 
   .quiz-button {
@@ -107,4 +113,24 @@ body {
     padding: 10px 20px;
     font-size: 20px;
     font-weight: bold;
+  }
+
+
+  .highscores-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 20px;
+    width: 50%;
+    margin: 0 auto;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .score-container {
+    padding: 15px 40px;
+    background-color: #FFC3A1;
+    color: #222;
+    border-radius: 5px;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+    text-align: center;
   }
