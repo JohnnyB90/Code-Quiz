@@ -90,11 +90,8 @@ const timerInterval = setInterval(function() {
     tryAgain.classList.add("quiz-button", "try-again-button");
     tryAgain.textContent = "Try Again";
     const viewHighscoresButton = document.createElement("button");
-    viewHighscoresButton.classList.add(
-      "quiz-button",
-      "view-highscores-button"
-    );
-    viewHighscoresButton.textContent = "View Highscores";
+    viewHighscoresButton.classList.add("quiz-button","view-highscores-button");
+    viewHighscoresButton.textContent = "Submit a Highscore";
     const buttonContainer = document.createElement("div");
     buttonContainer.classList.add("button-container");
     buttonContainer.appendChild(tryAgain);
@@ -129,7 +126,7 @@ function formatTime(time) {
       // add the "quiz-button" and "view-highscores-button" classes
       const viewHighscoresButton = document.createElement("button");
       viewHighscoresButton.classList.add( "quiz-button", "view-highscores-button" );
-      viewHighscoresButton.textContent = "View Highscores";
+      viewHighscoresButton.textContent = "Submit a Highscore";
       const buttonContainer = document.createElement("div");
       buttonContainer.classList.add("button-container");
       buttonContainer.appendChild(tryAgain);
