@@ -57,6 +57,9 @@ body {
     cursor: pointer;
     box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
     justify-self: end;
+    padding: 10px 20px;
+    font-size: 20px;
+    font-weight: bold;
     /* max-width: 10%;
     width: 10%; */
   }
@@ -75,4 +78,33 @@ body {
     flex-direction: column;
     align-items: center;
     margin-top: 20px;
+  }
+
+  .try-again-button, .view-highscores-button {
+    padding: 15px 40px;
+    background-color: #FFC3A1;
+    color: #222;
+    border-radius: 5px;
+    cursor: pointer;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+  }
+
+  button.quiz-button:not(.start-quiz-button) {
+    display: block;
+    margin: 20px auto;
+    padding: 10px 20px;
+    font-size: 20px;
+    font-weight: bold;
+  }
+
+  #highscores {
+    padding: 10px 20px;
+    font-size: 20px;
+    font-weight: bold;
+  }
+
+  p {
+    padding: 10px 20px;
+    font-size: 20px;
+    font-weight: bold;
   }

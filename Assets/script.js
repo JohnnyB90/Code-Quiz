@@ -45,6 +45,7 @@ let answers5 = {
 
 // Start button event listener
 const startButton = document.getElementById("start");
+startButton.classList.add("start-quiz-button"); // add the "start-quiz-button" class to the "Start Quiz" button
 startButton.addEventListener("click", function () {
   const startContainer = document.getElementById("start-paragraph-container");
   startContainer.innerHTML = ""; // remove the start button and paragraph
@@ -72,16 +73,16 @@ startButton.addEventListener("click", function () {
     if (questions[currentQuestionIndex] === undefined) {
       questionEl.textContent = "Game Over!";
       nextButton.remove();
+
       const tryAgain = document.createElement("button");
-      tryAgain.classList.add("quiz-button")
+      tryAgain.classList.add("quiz-button", "try-again-button"); // add the "quiz-button" and "try-again-button" classes
       tryAgain.textContent = "Try Again";
-      questionContainer.appendChild(tryAgain);
+
       const viewHighscoresButton = document.createElement("button");
-      viewHighscoresButton.classList.add("quiz-button")
+      viewHighscoresButton.classList.add("quiz-button", "view-highscores-button"); // add the "quiz-button" and "view-highscores-button" classes
       viewHighscoresButton.textContent = "View Highscores";
-      questionContainer.appendChild(viewHighscoresButton);
+
       const buttonContainer = document.createElement("div");
-      const finishButton = document.createElement("div"); 
       buttonContainer.classList.add("button-container");
       buttonContainer.appendChild(tryAgain);
       buttonContainer.appendChild(viewHighscoresButton);
