@@ -4,44 +4,44 @@ var questionEl = document.querySelector("#start-paragraph-container");
 
 // List of questions for the quiz.
 const questions = [
-  "1. Inside which HTML element do we put the JavaScript?",
-  "2. Where is the correct place to insert a JavaScript?",
-  '3. What is the correct syntax for referring to an external script called "xxx.js"?',
-  "4. The external JavaScript file must contain the <script> tag.",
-  '5. How do you write "Hello World" in an alert box?'
-];
-
-// Anwsers
-let answers1 = {
+  {
+  question: "1. Inside which HTML element do we put the JavaScript?",
+  anwsers: {
   a: "<js>",
-  b: "<scripting",
-  c: "script",
-  d: "<javascript>"
-};
+  b: "<scripting>",
+  c: "<script>",
+  d: "<javascript>"},
+  correctAnwser: 'C'},
 
-let answers2 = {
-  a: "The <body> section",
+  {question: "2. Where is the correct place to insert a JavaScript?",
+  anwsers: {
+  a: "Both the <head> section and the <body> section are correct",
   b: "The <head> section",
-  c: "Both the <head> section and the <body> section are correct",
-};
+  c: "The <body> section"},
+  correctAnwser: 'A'},
 
-let answers3 = {
-  a: '<script name="xxx.js">',
-  b: '<script src="xxx.js"> ',
-  c: '<script href="xxx.js">'
-};
+  {question: '3. What is the correct syntax for referring to an external script called "xxx.js"?',
+  anwsers: {
+  a: "<script src='xxx.js'>",
+  b: "<script href='xxx.js'>",
+  c: "<script name='xxx.js'>",
+  },
+  correctAnwser: 'C'},
 
-let answers4 = {
+  {question: "4. The external JavaScript file must contain the <script> tag.",
+  anwsers: {
   a: "True",
-  b: "False"
-};
+  b: "False"},
+  correctAnwser: "B"},
 
-let answers5 = {
+  {question: '5. How do you write "Hello World" in an alert box?',
+  anwsers: {
   a: 'msgBox("Hello World");',
   b: 'alertBox("Hello World");',
   c: 'alert("Hello World");',
-  d: 'msg("Hello World");'
-};
+  d: 'msg("Hello World");'},
+  correctAnwser: "C"}
+];
 
 // Start button event listener
 const startButton = document.getElementById("start");
@@ -141,6 +141,3 @@ function formatTime(time) {
     // Add an if statement for correct questions add time and +1 the score, incorrect questions remove time and -1 the score.
   });
 });
-
-
-
