@@ -1,8 +1,9 @@
-// Necessary Variables
 var currentQuestionIndex = 0;
 var questionEl = document.querySelector("#start-paragraph-container");
+var nextButton = document.createElement("button");
+nextButton.textContent = "Next";
+nextButton.className = "next-button";
 
-// List of questions for the quiz.
 const questions = [
   {
     question: "1. Inside which HTML element do we put the JavaScript?",
@@ -53,17 +54,14 @@ const questions = [
   },
 ];
 
-// Start button event listener
 const startButton = document.getElementById("start");
-// add the "start-quiz-button" class to the "Start Quiz" button
-startButton.classList.add("start-quiz-button");
 startButton.addEventListener("click", function () {
   const startContainer = document.getElementById("start-paragraph-container");
   startContainer.innerHTML = ""; // remove the start button and paragraph
 
   let currentQuestionIndex = 0;
   const totalQuestions = questions.length;
-  
+
   function showQuestion(index) {
     const questionObj = questions[index];
     const question = document.createElement("h2");
@@ -87,46 +85,42 @@ startButton.addEventListener("click", function () {
     container.appendChild(question);
     container.appendChild(choices);
     questionEl.appendChild(container);
+
+    const nextButton = document.createElement("button");
+    nextButton.textContent = "Next";
+    nextButton.className = "next-button";
+    container.appendChild(nextButton);
+    
+    nextButton.addEventListener("click", function () {
+      removeCurrentQuestion();
+      currentQuestionIndex++;
+      if (currentQuestionIndex >= totalQuestions) {
+        questionEl.textContent = "You have answered all questions";
+      } else {
+        showQuestion(currentQuestionIndex);
+      }
+    });
   }
-  
+
   function removeCurrentQuestion() {
     const currentContainer = questionEl.querySelector("div");
     if (currentContainer) {
       questionEl.removeChild(currentContainer);
     }
   }
-  
+
   showQuestion(currentQuestionIndex);
-  
-  const nextButton = document.createElement("button");
-  nextButton.textContent = "Next";
-  nextButton.className = "next-button";
-  questionEl.appendChild(nextButton);
-  nextButton.addEventListener("click", function () {
-    removeCurrentQuestion();
-    currentQuestionIndex++;
-    if (currentQuestionIndex >= totalQuestions) {
-      // Show the results if all questions have been answered
-      questionEl.textContent = "You have answered all questions";
-    } else {
-      showQuestion(currentQuestionIndex);
-    }
-  });
-});
-  // Beginning of the timer function and variable declarations
-  // set time to 2 minutes (120 seconds)
+
+  // Start the timer
   let time = 120;
 
-  // create timer element and display initial time
   const timerEl = document.getElementById("timer-display");
   timerEl.textContent = "Time: " + formatTime(time);
 
-  // decrease time every second using setInterval
   const timerInterval = setInterval(function () {
     time--;
     timerEl.textContent = "Time: " + formatTime(time);
     if (time <= 0) {
-      // clear the interval and end the quiz if time runs out
       clearInterval(timerInterval);
       questionEl.textContent = "Game Over!";
       nextButton.remove();
@@ -146,8 +140,7 @@ startButton.addEventListener("click", function () {
       questionContainer.appendChild(buttonContainer);
     }
   }, 1000);
-
-  // function to format time in "00:00" format
+  // Format the time to be display in minutes and seconds.
   function formatTime(time) {
     let minutes = Math.floor(time / 60);
     let seconds = time % 60;
@@ -155,6 +148,7 @@ startButton.addEventListener("click", function () {
     seconds = seconds < 10 ? "0" + seconds : seconds;
     return minutes + ":" + seconds;
   }
+});
 
   // The next button event listener to change the questions
   nextButton.addEventListener("click", function () {
