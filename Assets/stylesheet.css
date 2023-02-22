@@ -136,3 +136,11 @@ body {
     box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
     text-align: center;
   }
+
+  .answer-label {
+    font-size: 22px;
+    font-weight: bold;
+    text-align: center;
+    
+  }
+

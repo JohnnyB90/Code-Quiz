@@ -3,6 +3,7 @@ var questionEl = document.querySelector("#start-paragraph-container");
 var nextButton = document.createElement("button");
 nextButton.textContent = "Next";
 nextButton.className = "next-button";
+var score = 0
 
 const questions = [
   {
@@ -18,7 +19,7 @@ const questions = [
   {
     question: "2. Where is the correct place to insert a JavaScript?",
     anwsers: {
-      a: "Both the <head> section and the <body> section are correct",
+      a: "Both the <head> section and the <body> section",
       b: "The <head> section",
       c: "The <body> section",
     },
@@ -76,9 +77,11 @@ startButton.addEventListener("click", function () {
       input.setAttribute("type", "radio");
       input.setAttribute("name", questionObj.question);
       input.setAttribute("value", key);
+      input.className = "radios";
       label.appendChild(input);
       label.appendChild(document.createTextNode(value));
       choice.appendChild(label);
+      label.className = "answer-label";
       choices.appendChild(choice);
     }
     const container = document.createElement("div");
@@ -90,15 +93,43 @@ startButton.addEventListener("click", function () {
     nextButton.textContent = "Next";
     nextButton.className = "next-button";
     container.appendChild(nextButton);
-    
+
     nextButton.addEventListener("click", function () {
       removeCurrentQuestion();
       currentQuestionIndex++;
-      if (currentQuestionIndex >= totalQuestions) {
-        questionEl.textContent = "You have answered all questions";
-      } else {
-        showQuestion(currentQuestionIndex);
-      }
+      // const currentContainer = questionEl.querySelector("input");
+      // const selectedAnswer = currentContainer.querySelector
+      // ("input:checked");
+      // if (currentQuestionIndex >= totalQuestions) {
+      //   questionEl.textContent = "You have answered all questions";
+      //   const tryAgain = document.createElement("button");
+      //   tryAgain.classList.add("quiz-button", "try-again-button");
+      //   tryAgain.textContent = "Try Again";
+      //   const buttonContainer = document.createElement("div");
+      //   buttonContainer.classList.add("button-container");
+      //   buttonContainer.appendChild(tryAgain);
+      //   questionEl.appendChild(buttonContainer);
+      //   tryAgain.addEventListener("click", function () {
+      //     location.reload();
+      //   });
+      // } else if (!selectedAnswer) {
+      //   // If no answer is selected, show an alert and return
+      //     alert("Please select an answer");
+      //     return;
+      //   }
+      
+
+      // const answerValue = selectedAnswer.value.toUpperCase();
+      // const currentQuestion = questions[currentQuestionIndex];
+      // const correctAnswer = currentQuestion.correctAnwser;
+      // if (answerValue === correctAnswer) {
+      //   // If the answer is correct, add 10 seconds to the timer and increment the score
+      //   time += 10;
+      //   score++;
+      // } else {
+      //   // If the answer is incorrect, subtract 10 seconds from the timer and decrement the score
+      //   time -= 10;
+      // }
     });
   }
 
@@ -108,11 +139,10 @@ startButton.addEventListener("click", function () {
       questionEl.removeChild(currentContainer);
     }
   }
-
   showQuestion(currentQuestionIndex);
 
   // Start the timer
-  let time = 120;
+  let time = 15;
 
   const timerEl = document.getElementById("timer-display");
   timerEl.textContent = "Time: " + formatTime(time);
@@ -137,7 +167,10 @@ startButton.addEventListener("click", function () {
       buttonContainer.classList.add("button-container");
       buttonContainer.appendChild(tryAgain);
       buttonContainer.appendChild(viewHighscoresButton);
-      questionContainer.appendChild(buttonContainer);
+      questionEl.appendChild(buttonContainer);
+      tryAgain.addEventListener("click", function () {
+        location.reload();
+      });
     }
   }, 1000);
   // Format the time to be display in minutes and seconds.
@@ -149,39 +182,3 @@ startButton.addEventListener("click", function () {
     return minutes + ":" + seconds;
   }
 });
-
-  // The next button event listener to change the questions
-  nextButton.addEventListener("click", function () {
-    if (questions[currentQuestionIndex] === undefined) {
-      questionEl.textContent = "Game Over!";
-      nextButton.remove();
-      clearInterval(timerInterval);
-      // add the "quiz-button" and "try-again-button" classes
-      const tryAgain = document.createElement("button");
-      tryAgain.classList.add("quiz-button", "try-again-button");
-      tryAgain.textContent = "Try Again";
-      // Try again button will now take the user back to the start quiz
-      tryAgain.addEventListener("click", function () {
-        location.reload();
-      });
-      // add the "quiz-button" and "view-highscores-button" classes
-      const viewHighscoresButton = document.createElement("button");
-      viewHighscoresButton.classList.add(
-        "quiz-button",
-        "view-highscores-button"
-      );
-      viewHighscoresButton.textContent = "Submit a Highscore";
-      const buttonContainer = document.createElement("div");
-      buttonContainer.classList.add("button-container");
-      buttonContainer.appendChild(tryAgain);
-      buttonContainer.appendChild(viewHighscoresButton);
-      questionContainer.appendChild(buttonContainer);
-      // Display the questions as the next button is clicked
-    } else {
-      questionEl.textContent = questions[currentQuestionIndex];
-      currentQuestionIndex++;
-    }
-
-    // Add an if statement for correct questions add time and +1 the score, incorrect questions remove time and -1 the score.
-  });
-
