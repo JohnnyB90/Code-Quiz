@@ -3,7 +3,7 @@ var questionEl = document.querySelector("#start-paragraph-container");
 var nextButton = document.createElement("button");
 nextButton.textContent = "Next";
 nextButton.className = "next-button";
-var score = 0
+var score = 0;
 
 const questions = [
   {
@@ -14,7 +14,7 @@ const questions = [
       c: "<script>",
       d: "<javascript>",
     },
-    correctAnwser: "C",
+    correctAnwser: "c",
   },
   {
     question: "2. Where is the correct place to insert a JavaScript?",
@@ -23,7 +23,7 @@ const questions = [
       b: "The <head> section",
       c: "The <body> section",
     },
-    correctAnwser: "A",
+    correctAnwser: "a",
   },
   {
     question:
@@ -33,7 +33,7 @@ const questions = [
       b: "<script href='xxx.js'>",
       c: "<script name='xxx.js'>",
     },
-    correctAnwser: "C",
+    correctAnwser: "c",
   },
   {
     question: "4. The external JavaScript file must contain the <script> tag.",
@@ -41,7 +41,7 @@ const questions = [
       a: "True",
       b: "False",
     },
-    correctAnwser: "B",
+    correctAnwser: "b",
   },
   {
     question: '5. How do you write "Hello World" in an alert box?',
@@ -51,14 +51,15 @@ const questions = [
       c: 'alert("Hello World");',
       d: 'msg("Hello World");',
     },
-    correctAnwser: "C",
+    correctAnwser: "c",
   },
 ];
 
 const startButton = document.getElementById("start");
 startButton.addEventListener("click", function () {
   const startContainer = document.getElementById("start-paragraph-container");
-  startContainer.innerHTML = ""; // remove the start button and paragraph
+  // remove the start button and paragraph
+  startContainer.innerHTML = "";
 
   let currentQuestionIndex = 0;
   const totalQuestions = questions.length;
@@ -87,57 +88,51 @@ startButton.addEventListener("click", function () {
     const container = document.createElement("div");
     container.appendChild(question);
     container.appendChild(choices);
+    questionEl.innerHTML = "";
     questionEl.appendChild(container);
-
+  
     const nextButton = document.createElement("button");
     nextButton.textContent = "Next";
     nextButton.className = "next-button";
     container.appendChild(nextButton);
-
+  
     nextButton.addEventListener("click", function () {
-      removeCurrentQuestion();
-      currentQuestionIndex++;
-      // const currentContainer = questionEl.querySelector("input");
-      // const selectedAnswer = currentContainer.querySelector
-      // ("input:checked");
-      // if (currentQuestionIndex >= totalQuestions) {
-      //   questionEl.textContent = "You have answered all questions";
-      //   const tryAgain = document.createElement("button");
-      //   tryAgain.classList.add("quiz-button", "try-again-button");
-      //   tryAgain.textContent = "Try Again";
-      //   const buttonContainer = document.createElement("div");
-      //   buttonContainer.classList.add("button-container");
-      //   buttonContainer.appendChild(tryAgain);
-      //   questionEl.appendChild(buttonContainer);
-      //   tryAgain.addEventListener("click", function () {
-      //     location.reload();
-      //   });
-      // } else if (!selectedAnswer) {
-      //   // If no answer is selected, show an alert and return
-      //     alert("Please select an answer");
-      //     return;
-      //   }
-      
-
-      // const answerValue = selectedAnswer.value.toUpperCase();
-      // const currentQuestion = questions[currentQuestionIndex];
-      // const correctAnswer = currentQuestion.correctAnwser;
-      // if (answerValue === correctAnswer) {
-      //   // If the answer is correct, add 10 seconds to the timer and increment the score
-      //   time += 10;
-      //   score++;
-      // } else {
-      //   // If the answer is incorrect, subtract 10 seconds from the timer and decrement the score
-      //   time -= 10;
-      // }
+      const currentContainer = questionEl.querySelector("input.radios");
+      const selectedAnswer = currentContainer.querySelector("input:checked");
+      if (currentQuestionIndex >= totalQuestions - 1) {
+        // Display final message and try again button...
+        questionEl.textContent = "You have answered all questions";
+        const scoreMessage = document.createElement("p");
+        scoreMessage.textContent = "Your score is " + score + " out of " + totalQuestions;
+        questionEl.appendChild(scoreMessage);
+        const tryAgain = document.createElement("button");
+        tryAgain.classList.add("quiz-button", "try-again-button");
+        tryAgain.textContent = "Try Again";
+        const buttonContainer = document.createElement("div");
+        buttonContainer.classList.add("button-container");
+        buttonContainer.appendChild(tryAgain);
+        questionEl.appendChild(buttonContainer);
+        tryAgain.addEventListener("click", function () {
+          location.reload();
+        });
+      } else {
+        // Update score and currentQuestionIndex if selected answer is correct...
+        if (selectedAnswer && selectedAnswer.value === questions[currentQuestionIndex].correctAnwser) {
+          score++;
+        }
+        currentQuestionIndex++;
+        // Show the next question...
+        showQuestion(currentQuestionIndex);
+      }
     });
   }
-
   function removeCurrentQuestion() {
     const currentContainer = questionEl.querySelector("div");
     if (currentContainer) {
       questionEl.removeChild(currentContainer);
     }
+    console.log(score);
+    console.log(selectedAnswer);
   }
   showQuestion(currentQuestionIndex);
 
