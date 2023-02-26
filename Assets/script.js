@@ -56,7 +56,8 @@ const questions = [
 ];
 
 const startButton = document.getElementById("start");
-startButton.addEventListener("click", function () {
+if (startButton) {
+  startButton.addEventListener("click", function () {
   const startContainer = document.getElementById("start-paragraph-container");
   // remove the start button and paragraph
   startContainer.innerHTML = "";
@@ -85,84 +86,92 @@ startButton.addEventListener("click", function () {
       label.className = "answer-label";
       choices.appendChild(choice);
     }
+
+
     const container = document.createElement("div");
     container.appendChild(question);
     container.appendChild(choices);
     questionEl.innerHTML = "";
     questionEl.appendChild(container);
-  
+    
+    // Create the next button
     const nextButton = document.createElement("button");
     nextButton.textContent = "Next";
     nextButton.className = "next-button";
     container.appendChild(nextButton);
   
-    nextButton.addEventListener("click", function () {
-      const currentContainer = questionEl.querySelector("input.radios");
-      const selectedAnswer = currentContainer.querySelector("input:checked");
-      if (currentQuestionIndex >= totalQuestions - 1) {
-        // Display final message and try again button...
-        questionEl.textContent = "You have answered all questions";
-        const scoreMessage = document.createElement("p");
-        scoreMessage.textContent = "Your score is " + score + " out of " + totalQuestions;
-        questionEl.appendChild(scoreMessage);
-        const tryAgain = document.createElement("button");
-        tryAgain.classList.add("quiz-button", "try-again-button");
-        tryAgain.textContent = "Try Again";
-        const buttonContainer = document.createElement("div");
-        buttonContainer.classList.add("button-container");
-        buttonContainer.appendChild(tryAgain);
-        questionEl.appendChild(buttonContainer);
-        tryAgain.addEventListener("click", function () {
-          location.reload();
-        });
-      } else {
-        // Update score and currentQuestionIndex if selected answer is correct...
-        if (selectedAnswer && selectedAnswer.value === questions[currentQuestionIndex].correctAnwser) {
-          score++;
-        }
-        currentQuestionIndex++;
-        // Show the next question...
-        showQuestion(currentQuestionIndex);
-      }
-    });
-  }
-  function removeCurrentQuestion() {
-    const currentContainer = questionEl.querySelector("div");
-    if (currentContainer) {
-      questionEl.removeChild(currentContainer);
-    }
+ nextButton.addEventListener("click", function () {
+// Select the container that includes all the radio button inputs
+const currentContainer = questionEl.querySelector("ul");
+
+// Find the selected input element within the container
+const selectedInput = currentContainer.querySelector("input:checked");
+
+// Get the value of the selected input (i.e., the answer key)
+const selectedAnswer = selectedInput ? selectedInput.value : null;
+  console.log(selectedAnswer)
+
+  if (selectedAnswer === questions[currentQuestionIndex].correctAnwser) {
+    score++;
     console.log(score);
-    console.log(selectedAnswer);
+  }
+  
+  if (currentQuestionIndex >= totalQuestions - 1) {
+    // Display final message and try again button...
+    questionEl.textContent = "You have answered all questions";
+    const scoreMessage = document.createElement("p");
+    scoreMessage.textContent = "Your score is " + score + " out of " + totalQuestions;
+    questionEl.appendChild(scoreMessage);
+    const tryAgain = document.createElement("button");
+    tryAgain.classList.add("quiz-button", "try-again-button");
+    tryAgain.textContent = "Try Again";
+    const buttonContainer = document.createElement("div");
+    buttonContainer.classList.add("button-container");
+    buttonContainer.appendChild(tryAgain);
+    questionEl.appendChild(buttonContainer);
+    const addHighscore = document.createElement("button");
+    addHighscore.classList.add("quiz-button", "view-highscores-button");
+    addHighscore.textContent = "Add Highscore";
+    buttonContainer.appendChild(addHighscore);
+    tryAgain.addEventListener("click", function () {
+      location.reload();
+    });
+  } else {
+    currentQuestionIndex++;
+    // Show the next question...
+    showQuestion(currentQuestionIndex);
+  }
+});
   }
   showQuestion(currentQuestionIndex);
 
-  // Start the timer
+  // Variable for timer seconds starting out
   let time = 15;
-
+// Grabbing the timer element from the DOM
   const timerEl = document.getElementById("timer-display");
   timerEl.textContent = "Time: " + formatTime(time);
-
+// Function to begin the time count using the seconds at bottom of function
   const timerInterval = setInterval(function () {
     time--;
     timerEl.textContent = "Time: " + formatTime(time);
+    // Included if time runs out statement, offer the player to try again, or to add their highscore.
     if (time <= 0) {
       clearInterval(timerInterval);
       questionEl.textContent = "Game Over!";
       nextButton.remove();
+      const buttonContainer = document.createElement("div");
+      buttonContainer.classList.add("button-container");
+      questionEl.appendChild(buttonContainer);
+      // Create add highscore button and append it to the DOM
+      const addHighscore = document.createElement("button");
+      addHighscore.classList.add("quiz-button", "view-highscores-button");
+      addHighscore.textContent = "Add Highscore";
+      buttonContainer.appendChild(addHighscore);
+      // Create the try again button and append it to the DOM
       const tryAgain = document.createElement("button");
       tryAgain.classList.add("quiz-button", "try-again-button");
       tryAgain.textContent = "Try Again";
-      const viewHighscoresButton = document.createElement("button");
-      viewHighscoresButton.classList.add(
-        "quiz-button",
-        "view-highscores-button"
-      );
-      viewHighscoresButton.textContent = "Submit a Highscore";
-      const buttonContainer = document.createElement("div");
-      buttonContainer.classList.add("button-container");
       buttonContainer.appendChild(tryAgain);
-      buttonContainer.appendChild(viewHighscoresButton);
-      questionEl.appendChild(buttonContainer);
       tryAgain.addEventListener("click", function () {
         location.reload();
       });
@@ -177,3 +186,4 @@ startButton.addEventListener("click", function () {
     return minutes + ":" + seconds;
   }
 });
+}
