@@ -130,7 +130,7 @@ const selectedAnswer = selectedInput ? selectedInput.value : null;
     buttonContainer.appendChild(tryAgain);
     questionEl.appendChild(buttonContainer);
     const addHighscore = document.createElement("button");
-    addHighscore.classList.add("quiz-button", "view-highscores-button");
+    addHighscore.classList.add("quiz-button", "view-highscores-button", "addHighscoreBtn");
     addHighscore.textContent = "Add Highscore";
     buttonContainer.appendChild(addHighscore);
     tryAgain.addEventListener("click", function () {
@@ -144,7 +144,6 @@ const selectedAnswer = selectedInput ? selectedInput.value : null;
 });
   }
   showQuestion(currentQuestionIndex);
-
   // Variable for timer seconds starting out
   let time = 15;
 // Grabbing the timer element from the DOM
@@ -164,7 +163,7 @@ const selectedAnswer = selectedInput ? selectedInput.value : null;
       questionEl.appendChild(buttonContainer);
       // Create add highscore button and append it to the DOM
       const addHighscore = document.createElement("button");
-      addHighscore.classList.add("quiz-button", "view-highscores-button");
+      addHighscore.classList.add("quiz-button", "view-highscores-button", "addHighscoreBtn");
       addHighscore.textContent = "Add Highscore";
       buttonContainer.appendChild(addHighscore);
       // Create the try again button and append it to the DOM
@@ -172,6 +171,20 @@ const selectedAnswer = selectedInput ? selectedInput.value : null;
       tryAgain.classList.add("quiz-button", "try-again-button");
       tryAgain.textContent = "Try Again";
       buttonContainer.appendChild(tryAgain);
+      // Adds function to submit a highscore
+      addHighscore.addEventListener("click", () => {
+        highscoreForm.classList.remove("hidden");
+        console.log("Hello World")
+      });
+      const submitHighscoreBtn = document.getElementById("submit-highscore-btn"); 
+      submitHighscoreBtn.addEventListener("click", () => {
+        const nameInput = document.getElementById("name");
+        const name = nameInput.value;
+        // Here you can submit the name to the highscore list
+        highscoreForm.classList.add("hidden");
+        nameInput.value = "";
+      });
+      // Add the function to just try again and start over
       tryAgain.addEventListener("click", function () {
         location.reload();
       });
@@ -187,3 +200,5 @@ const selectedAnswer = selectedInput ? selectedInput.value : null;
   }
 });
 }
+
+
