@@ -58,147 +58,357 @@ const questions = [
 const startButton = document.getElementById("start");
 if (startButton) {
   startButton.addEventListener("click", function () {
-  const startContainer = document.getElementById("start-paragraph-container");
-  // remove the start button and paragraph
-  startContainer.innerHTML = "";
+    const startContainer = document.getElementById("start-paragraph-container");
 
-  let currentQuestionIndex = 0;
-  const totalQuestions = questions.length;
+    // remove the start button and paragraph
+    startContainer.innerHTML = "";
 
-  function showQuestion(index) {
-    const questionObj = questions[index];
-    const question = document.createElement("h2");
-    question.textContent = questionObj.question;
-    const choices = document.createElement("ul");
-    for (const [key, value] of Object.entries(questionObj.anwsers)) {
-      const choice = document.createElement("li");
-      choice.className = "anwsersList";
-      choice.style.listStyleType = "none";
-      const label = document.createElement("label");
-      const input = document.createElement("input");
-      input.setAttribute("type", "radio");
-      input.setAttribute("name", questionObj.question);
-      input.setAttribute("value", key);
-      input.className = "radios";
-      label.appendChild(input);
-      label.appendChild(document.createTextNode(value));
-      choice.appendChild(label);
-      label.className = "answer-label";
-      choices.appendChild(choice);
+    let currentQuestionIndex = 0;
+    const totalQuestions = questions.length;
+
+    function showQuestion(index) {
+      const questionObj = questions[index];
+      const question = document.createElement("h2");
+      question.textContent = questionObj.question;
+      const choices = document.createElement("ul");
+      for (const [key, value] of Object.entries(questionObj.anwsers)) {
+        const choice = document.createElement("li");
+        choice.className = "anwsersList";
+        choice.style.listStyleType = "none";
+        const label = document.createElement("label");
+        const input = document.createElement("input");
+        input.setAttribute("type", "radio");
+        input.setAttribute("name", questionObj.question);
+        input.setAttribute("value", key);
+        input.className = "radios";
+        label.appendChild(input);
+        label.appendChild(document.createTextNode(value));
+        choice.appendChild(label);
+        label.className = "answer-label";
+        choices.appendChild(choice);
+      }
+
+      const container = document.createElement("div");
+      container.appendChild(question);
+      container.appendChild(choices);
+      questionEl.innerHTML = "";
+      questionEl.appendChild(container);
+
+      // Create the next button
+      const nextButton = document.createElement("button");
+      nextButton.textContent = "Next";
+      nextButton.className = "next-button";
+      container.appendChild(nextButton);
+
+      nextButton.addEventListener("click", function () {
+        // Select the container that includes all the radio button inputs
+        const currentContainer = questionEl.querySelector("ul");
+
+        // Find the selected input element within the container
+        const selectedInput = currentContainer.querySelector("input:checked");
+
+        // Get the value of the selected input (i.e., the answer key)
+        const selectedAnswer = selectedInput ? selectedInput.value : null;
+        console.log(selectedAnswer);
+
+        if (selectedAnswer === questions[currentQuestionIndex].correctAnwser) {
+          score++;
+          time+10
+          console.log(score);
+        }
+
+        if (currentQuestionIndex >= totalQuestions - 1) {
+          // Display final message and try again button...
+          questionEl.textContent = "You have answered all questions";
+          clearInterval(timerInterval);
+          const scoreMessage = document.createElement("p");
+          scoreMessage.textContent =
+            "Your score is " + score + " out of " + totalQuestions;
+          questionEl.appendChild(scoreMessage);
+          const tryAgain = document.createElement("button");
+          tryAgain.classList.add("quiz-button", "try-again-button");
+          tryAgain.textContent = "Try Again";
+          const buttonContainer = document.createElement("div");
+          buttonContainer.classList.add("button-container");
+          buttonContainer.appendChild(tryAgain);
+          questionEl.appendChild(buttonContainer);
+
+          // Create add highscore button and append it to the DOM
+          const addHighscore = document.createElement("button");
+          addHighscore.classList.add(
+            "quiz-button",
+            "view-highscores-button",
+            "addHighscoreBtn"
+          );
+          addHighscore.textContent = "Add Highscore";
+          buttonContainer.appendChild(addHighscore);
+
+          // Adds function to submit a highscore
+          var highscoreForm = document.querySelector("#highscore-form");
+          console.log(highscoreForm);
+          addHighscore.addEventListener("click", () => {
+
+            // Get the current score value
+            const currentScore = score;
+
+            // Create a new form element to wrap the highscore form
+            const form = document.createElement("form");
+            form.id = "highscore-form";
+            form.style.display = "flex";
+            form.style.flexDirection = "column";
+            form.style.justifyContent = "center";
+            form.style.alignItems = "center";
+            form.style.position = "fixed";
+            form.style.top = "50%";
+            form.style.left = "50%";
+            form.style.transform = "translate(-50%, -50%)";
+            form.style.width = "200px";
+            form.style.padding = "20px";
+            form.style.backgroundColor = "white";
+            form.style.border = "1px solid black";
+
+            // Create a new div element to display the score
+            const scoreDiv = document.createElement("div");
+            scoreDiv.textContent = `Score: ${currentScore}`;
+            scoreDiv.style.marginBottom = "10px";
+            form.appendChild(scoreDiv);
+
+            // Create the name input element
+            const nameInput = document.createElement("input");
+            nameInput.id = "name";
+            nameInput.type = "text";
+            nameInput.placeholder = "Enter your name";
+            nameInput.style.marginBottom = "10px";
+            form.appendChild(nameInput);
+
+            // Creates the submit button for highscore
+            const submitHighscoreBtn = document.createElement("button");
+            submitHighscoreBtn.id = "submit-highscore-btn";
+            submitHighscoreBtn.textContent = "Submit";
+            submitHighscoreBtn.type = "submit";
+            submitHighscoreBtn.style.marginBottom = "10px";
+            form.appendChild(submitHighscoreBtn);
+
+            // Attach the form to the document body
+            document.body.appendChild(form);
+
+            // Add event listener to the form submit button
+            form.addEventListener("submit", (event) => {
+              // prevent form from submitting and refreshing the page
+              event.preventDefault();
+
+              // Get the name value from the input
+              const name = nameInput.value;
+
+              // Check if name is a non-empty string
+              if (typeof name === "string" && name.trim().length > 0) {
+                // Create a new object to store the name and score
+                const highscore = { name, score: currentScore };
+
+                // Get the current highscores array from localStorage, or create an empty one if it doesn't exist
+                let highscores =
+                  JSON.parse(localStorage.getItem("highscores"));
+
+                // Add the new highscore object to the array
+                highscores.push(highscore);
+
+                // Sort the highscores array in descending order of score
+                highscores.sort((a, b) => b.score - a.score);
+
+                // Store the highscores array in localStorage
+                localStorage.setItem("highscores", JSON.stringify(highscores));
+
+                // Redirect to the highscores page
+                window.location.href = "highscores.html";
+              } else {
+                // Show an alert if the name is not a non-empty string
+                alert("Please enter a valid name.");
+              }
+              // Hide the form
+              form.classList.add("hidden");
+
+              // Clear the name input
+              nameInput.value = "";
+            });
+
+            form.classList.remove("hidden");
+            console.log("Hello World");
+          });
+          tryAgain.addEventListener("click", function () {
+            location.reload();
+          });
+        } else {
+          currentQuestionIndex++;
+          // Show the next question...
+          showQuestion(currentQuestionIndex);
+        }
+      });
     }
-
-
-    const container = document.createElement("div");
-    container.appendChild(question);
-    container.appendChild(choices);
-    questionEl.innerHTML = "";
-    questionEl.appendChild(container);
-    
-    // Create the next button
-    const nextButton = document.createElement("button");
-    nextButton.textContent = "Next";
-    nextButton.className = "next-button";
-    container.appendChild(nextButton);
-  
- nextButton.addEventListener("click", function () {
-// Select the container that includes all the radio button inputs
-const currentContainer = questionEl.querySelector("ul");
-
-// Find the selected input element within the container
-const selectedInput = currentContainer.querySelector("input:checked");
-
-// Get the value of the selected input (i.e., the answer key)
-const selectedAnswer = selectedInput ? selectedInput.value : null;
-  console.log(selectedAnswer)
-
-  if (selectedAnswer === questions[currentQuestionIndex].correctAnwser) {
-    score++;
-    console.log(score);
-  }
-  
-  if (currentQuestionIndex >= totalQuestions - 1) {
-    // Display final message and try again button...
-    questionEl.textContent = "You have answered all questions";
-    const scoreMessage = document.createElement("p");
-    scoreMessage.textContent = "Your score is " + score + " out of " + totalQuestions;
-    questionEl.appendChild(scoreMessage);
-    const tryAgain = document.createElement("button");
-    tryAgain.classList.add("quiz-button", "try-again-button");
-    tryAgain.textContent = "Try Again";
-    const buttonContainer = document.createElement("div");
-    buttonContainer.classList.add("button-container");
-    buttonContainer.appendChild(tryAgain);
-    questionEl.appendChild(buttonContainer);
-    const addHighscore = document.createElement("button");
-    addHighscore.classList.add("quiz-button", "view-highscores-button", "addHighscoreBtn");
-    addHighscore.textContent = "Add Highscore";
-    buttonContainer.appendChild(addHighscore);
-    tryAgain.addEventListener("click", function () {
-      location.reload();
-    });
-  } else {
-    currentQuestionIndex++;
-    // Show the next question...
     showQuestion(currentQuestionIndex);
-  }
-});
-  }
-  showQuestion(currentQuestionIndex);
-  // Variable for timer seconds starting out
-  let time = 15;
-// Grabbing the timer element from the DOM
-  const timerEl = document.getElementById("timer-display");
-  timerEl.textContent = "Time: " + formatTime(time);
-// Function to begin the time count using the seconds at bottom of function
-  const timerInterval = setInterval(function () {
-    time--;
+
+    // Variable for timer seconds starting out
+    let time = 5;
+
+    // Grabbing the timer element from the DOM
+    const timerEl = document.getElementById("timer-display");
     timerEl.textContent = "Time: " + formatTime(time);
-    // Included if time runs out statement, offer the player to try again, or to add their highscore.
-    if (time <= 0) {
-      clearInterval(timerInterval);
-      questionEl.textContent = "Game Over!";
-      nextButton.remove();
-      const buttonContainer = document.createElement("div");
-      buttonContainer.classList.add("button-container");
-      questionEl.appendChild(buttonContainer);
-      // Create add highscore button and append it to the DOM
-      const addHighscore = document.createElement("button");
-      addHighscore.classList.add("quiz-button", "view-highscores-button", "addHighscoreBtn");
-      addHighscore.textContent = "Add Highscore";
-      buttonContainer.appendChild(addHighscore);
-      // Create the try again button and append it to the DOM
-      const tryAgain = document.createElement("button");
-      tryAgain.classList.add("quiz-button", "try-again-button");
-      tryAgain.textContent = "Try Again";
-      buttonContainer.appendChild(tryAgain);
-      // Adds function to submit a highscore
-      addHighscore.addEventListener("click", () => {
-        highscoreForm.classList.remove("hidden");
-        console.log("Hello World")
-      });
-      const submitHighscoreBtn = document.getElementById("submit-highscore-btn"); 
-      submitHighscoreBtn.addEventListener("click", () => {
-        const nameInput = document.getElementById("name");
-        const name = nameInput.value;
-        // Here you can submit the name to the highscore list
-        highscoreForm.classList.add("hidden");
-        nameInput.value = "";
-      });
-      // Add the function to just try again and start over
-      tryAgain.addEventListener("click", function () {
-        location.reload();
-      });
+
+    // Function to begin the time count using the seconds at bottom of function
+    const timerInterval = setInterval(function () {
+      time--;
+      timerEl.textContent = "Time: " + formatTime(time);
+
+      
+      // Included if time runs out statement, offer the player to try again, or to add their highscore.
+      if (time <= 0) {
+        clearInterval(timerInterval);
+        questionEl.textContent = "Game Over!";
+        nextButton.remove();
+        const buttonContainer = document.createElement("div");
+        buttonContainer.classList.add("button-container");
+        questionEl.appendChild(buttonContainer);
+
+        // Create add highscore button and append it to the DOM
+        const addHighscore = document.createElement("button");
+        addHighscore.classList.add(
+          "quiz-button",
+          "view-highscores-button",
+          "addHighscoreBtn"
+        );
+        addHighscore.textContent = "Add Highscore";
+        buttonContainer.appendChild(addHighscore);
+
+        // Adds function to submit a highscore
+        var highscoreForm = document.querySelector("#highscore-form");
+        console.log(highscoreForm);
+        addHighscore.addEventListener("click", () => {
+          // Get the current score value
+          const currentScore = score;
+
+          // Create a new form element to wrap the highscore form
+          const form = document.createElement("form");
+          form.id = "highscore-form";
+          form.style.display = "flex";
+          form.style.flexDirection = "column";
+          form.style.justifyContent = "center";
+          form.style.alignItems = "center";
+          form.style.position = "fixed";
+          form.style.top = "50%";
+          form.style.left = "50%";
+          form.style.transform = "translate(-50%, -50%)";
+          form.style.width = "200px";
+          form.style.padding = "20px";
+          form.style.backgroundColor = "white";
+          form.style.border = "1px solid black";
+
+          // Create a new div element to display the score
+          const scoreDiv = document.createElement("div");
+          scoreDiv.textContent = `Score: ${currentScore}`;
+          scoreDiv.style.marginBottom = "10px";
+          form.appendChild(scoreDiv);
+
+          // Create the name input element
+          const nameInput = document.createElement("input");
+          nameInput.id = "name";
+          nameInput.type = "text";
+          nameInput.placeholder = "Enter your name";
+          nameInput.style.marginBottom = "10px";
+          form.appendChild(nameInput);
+
+          // Creates the submit button for highscore
+          const submitHighscoreBtn = document.createElement("button");
+          submitHighscoreBtn.id = "submit-highscore-btn";
+          submitHighscoreBtn.textContent = "Submit";
+          submitHighscoreBtn.type = "submit";
+          submitHighscoreBtn.style.marginBottom = "10px";
+          form.appendChild(submitHighscoreBtn);
+
+          // Attach the form to the document body
+          document.body.appendChild(form);
+
+          // Add event listener to the form submit button
+          form.addEventListener("submit", (event) => {
+            // prevent form from submitting and refreshing the page
+            event.preventDefault();
+
+            // Get the name value from the input
+            const name = nameInput.value;
+
+            // Check if name is a non-empty string
+            if (typeof name === "string" && name.trim().length > 0) {
+              // Create a new object to store the name and score
+              const highscore = { name, score: currentScore };
+
+              // Get the current highscores array from localStorage
+              let highscores =
+                JSON.parse(localStorage.getItem("highscores"));
+
+              // Add the new highscore object to the array
+              highscores.push(highscore);
+
+              // Sort the highscores array in descending order of score
+              highscores.sort((a, b) => b.score - a.score);
+
+              // Store the highscores array in localStorage
+              localStorage.setItem("highscores", JSON.stringify(highscores));
+
+              // Redirect to the highscores page
+              window.location.href = "highscores.html";
+            } else {
+              // Show an alert if the name is not a non-empty string
+              alert("Please enter a valid name.");
+            }
+            // Hide the form
+            form.classList.add("hidden");
+
+            // Clear the name input
+            nameInput.value = "";
+          });
+
+          form.classList.remove("hidden");
+          console.log("Hello World");
+        });
+
+        // Create the try again button and append it to the DOM
+        const tryAgain = document.createElement("button");
+        tryAgain.classList.add("quiz-button", "try-again-button");
+        tryAgain.textContent = "Try Again";
+        buttonContainer.appendChild(tryAgain);
+
+        // Add the function to just try again and start over
+        tryAgain.addEventListener("click", function () {
+          location.reload();
+        });
+      }
+    }, 1000);
+    // Format the time to be display in minutes and seconds.
+    function formatTime(time) {
+      let minutes = Math.floor(time / 60);
+      let seconds = time % 60;
+      minutes = minutes < 10 ? "0" + minutes : minutes;
+      seconds = seconds < 10 ? "0" + seconds : seconds;
+      return minutes + ":" + seconds;
     }
-  }, 1000);
-  // Format the time to be display in minutes and seconds.
-  function formatTime(time) {
-    let minutes = Math.floor(time / 60);
-    let seconds = time % 60;
-    minutes = minutes < 10 ? "0" + minutes : minutes;
-    seconds = seconds < 10 ? "0" + seconds : seconds;
-    return minutes + ":" + seconds;
-  }
-});
+  });
 }
 
+// Get the highscores array from localStorage, or create an empty one if it doesn't exist
+let highscores = JSON.parse(localStorage.getItem("highscores")) || [];
 
+// Get the table body element
+const tableBody = document.querySelector("#highscores-table tbody");
+
+// Loop through the highscores array and create a table row for each highscore
+for (let i = 0; i < highscores.length; i++) {
+  const highscore = highscores[i];
+  const tr = document.createElement("tr");
+  const tdName = document.createElement("td");
+  tdName.textContent = highscore.name;
+  tr.appendChild(tdName);
+  const tdScore = document.createElement("td");
+  tdScore.textContent = highscore.score;
+  tr.appendChild(tdScore);
+  if (tableBody) {
+    tableBody.appendChild(tr);
+  }
+}

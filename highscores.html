@@ -14,10 +14,18 @@
             <button id="highscores" onclick="window.location.href='index.html'">Homepage</button>
         </header>
         <h1>Highscores</h1>
-        <div id="highscore-form" class="hidden">
-            <label for="name">Name:</label>
-            <input type="text" id="name" name="name">
-            <button id="submit-highscore-btn">Submit</button>
+        <div class="table-container">
+            <table id="highscores-table">
+            <thead>
+              <tr>
+                <th id="nameTableColumn">Name</th>
+                <th id="scoreTableColumn">Score</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- Highscores will be added here -->
+            </tbody>
+        </table>
         </div>
         <script src="./Assets/script.js"></script>
     </body>
