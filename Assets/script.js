@@ -231,39 +231,31 @@ if (startButton) {
 
             // Add event listener to the form submit button
             form.addEventListener("submit", (event) => {
-              // prevent form from submitting and refreshing the page
               event.preventDefault();
-
-              // Get the name value from the input
+            
               const name = nameInput.value;
-
-              // Check if name is a non-empty string
+            
               if (typeof name === "string" && name.trim().length > 0) {
-                // Create a new object to store the name and score
                 const highscore = { name, score: currentScore };
-
-                // Get the current highscores array from localStorage, or create an empty one if it doesn't exist
+            // Gets highscores from the storage if they are there
                 let highscores = JSON.parse(localStorage.getItem("highscores"));
-
-                // Add the new highscore object to the array
+            
+                if (highscores === null) {
+                  highscores = [];
+                }
+            
                 highscores.push(highscore);
-
-                // Sort the highscores array in descending order of score
                 highscores.sort((a, b) => b.score - a.score);
-
-                // Store the highscores array in localStorage
+            // Adds the highscore to the local storage
                 localStorage.setItem("highscores", JSON.stringify(highscores));
 
-                // Redirect to the highscores page
+            // Ensures that there is a name added to the text field
                 window.location.href = "highscores.html";
               } else {
-                // Show an alert if the name is not a non-empty string
                 alert("Please enter a valid name.");
               }
-              // Hide the form
+            // Hides the form after a Highscore is added.
               form.classList.add("hidden");
-
-              // Clear the name input
               nameInput.value = "";
             });
 
