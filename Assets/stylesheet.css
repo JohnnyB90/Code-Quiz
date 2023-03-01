@@ -185,7 +185,7 @@ body {
   }
 
 
-  /* Styles for desktop and tablet screens */
+/* Styles for desktop and tablet screens */
 .table-container {
   display: flex;
   justify-content: center;
@@ -226,7 +226,32 @@ body {
   }
   
   /* Styles for mobile screens */
-  @media (max-width: 767px) {
+  @media (max-width: 428px) {
+  .highscores-container {
+  display: block;
+  width: 90%;
+  margin: 0 auto;
+  font-size: 20px;
+  }
+  
+  #highscores-table th {
+  padding: 10px 3%;
+  font-size: 18px;
+  }
+  
+  #highscores-table td {
+  padding: 10px;
+  font-size: 16px;
+  }
+  
+  #highscores-table th:nth-child(1),
+  #highscores-table td:nth-child(1) {
+  text-align: left;
+  }
+  }
+  
+  /* Styles for small tablet screens */
+  @media (min-width: 429px) and (max-width: 767px) {
   .highscores-container {
   display: block;
   width: 90%;
@@ -235,7 +260,7 @@ body {
   }
   
   #highscores-table th {
-  padding: 10px 3%;
+  padding: 10px 5%;
   font-size: 20px;
   }
   
@@ -250,7 +275,7 @@ body {
   }
   }
   
-  /* Styles for small tablet screens */
+  /* Styles for medium tablet screens */
   @media (min-width: 768px) and (max-width: 1023px) {
   .highscores-container {
   grid-template-columns: 1fr;
