@@ -60,7 +60,7 @@ if (startButton) {
   startButton.addEventListener("click", function () {
     const startContainer = document.getElementById("start-paragraph-container");
 
-    // remove the start button and paragraph
+    // remove the start button and paragraphanswer-label
     startContainer.innerHTML = "";
 
     let currentQuestionIndex = 0;
@@ -111,10 +111,19 @@ if (startButton) {
         const selectedAnswer = selectedInput ? selectedInput.value : null;
         console.log(selectedAnswer);
 
+        // Check if an answer is selected
+        if (!selectedAnswer) {
+          alert("Please select an answer!");
+          return;
+        }
+
+        // A conditional that will deduct 10 seconds for wrong answers and add 10 seconds for correct answers
         if (selectedAnswer === questions[currentQuestionIndex].correctAnwser) {
           score++;
-          time+10
+          time += 10;
           console.log(score);
+        } else {
+          time -= 10;
         }
 
         if (currentQuestionIndex >= totalQuestions - 1) {
@@ -147,7 +156,6 @@ if (startButton) {
           var highscoreForm = document.querySelector("#highscore-form");
           console.log(highscoreForm);
           addHighscore.addEventListener("click", () => {
-
             // Get the current score value
             const currentScore = score;
 
@@ -162,15 +170,18 @@ if (startButton) {
             form.style.top = "50%";
             form.style.left = "50%";
             form.style.transform = "translate(-50%, -50%)";
-            form.style.width = "200px";
+            form.style.width = "400px";
+            form.style.height = "400px";
             form.style.padding = "20px";
             form.style.backgroundColor = "white";
-            form.style.border = "1px solid black";
+            form.style.border = "3px solid black";
+            form.style.borderRadius = "10px";
 
             // Create a new div element to display the score
             const scoreDiv = document.createElement("div");
             scoreDiv.textContent = `Score: ${currentScore}`;
             scoreDiv.style.marginBottom = "10px";
+            scoreDiv.style = "x-large";
             form.appendChild(scoreDiv);
 
             // Create the name input element
@@ -179,6 +190,8 @@ if (startButton) {
             nameInput.type = "text";
             nameInput.placeholder = "Enter your name";
             nameInput.style.marginBottom = "10px";
+            nameInput.style.width = "4%";
+            nameInput.style.height = "4%";
             form.appendChild(nameInput);
 
             // Creates the submit button for highscore
@@ -187,7 +200,31 @@ if (startButton) {
             submitHighscoreBtn.textContent = "Submit";
             submitHighscoreBtn.type = "submit";
             submitHighscoreBtn.style.marginBottom = "10px";
+            submitHighscoreBtn.style.width = "100%";
+            submitHighscoreBtn.style.padding = "10px";
+            submitHighscoreBtn.style.backgroundColor = "#ffff80";
+            submitHighscoreBtn.style.color = "black";
+            submitHighscoreBtn.style.fontSize = "x-large";
+            submitHighscoreBtn.style.border = "none";
+            submitHighscoreBtn.style.cursor = "pointer";
             form.appendChild(submitHighscoreBtn);
+
+            // Adds mouseover color effect to submit button
+            submitHighscoreBtn.addEventListener("mouseover", () => {
+              submitHighscoreBtn.style.backgroundColor = "#ffb366";
+            });
+
+            // Leaves a color for the background when removing mouse from button
+            submitHighscoreBtn.addEventListener("mouseout", () => {
+              submitHighscoreBtn.style.backgroundColor = "#ffff80";
+            });
+
+            // Adds some style to the name input box for submit highscore
+            nameInput.style.width = "100%";
+            nameInput.style.padding = "10px";
+            nameInput.style.marginBottom = "10px";
+            nameInput.style.border = "1px solid #ccc";
+            nameInput.style.borderRadius = "10px";
 
             // Attach the form to the document body
             document.body.appendChild(form);
@@ -206,8 +243,7 @@ if (startButton) {
                 const highscore = { name, score: currentScore };
 
                 // Get the current highscores array from localStorage, or create an empty one if it doesn't exist
-                let highscores =
-                  JSON.parse(localStorage.getItem("highscores"));
+                let highscores = JSON.parse(localStorage.getItem("highscores"));
 
                 // Add the new highscore object to the array
                 highscores.push(highscore);
@@ -258,7 +294,6 @@ if (startButton) {
       time--;
       timerEl.textContent = "Time: " + formatTime(time);
 
-      
       // Included if time runs out statement, offer the player to try again, or to add their highscore.
       if (time <= 0) {
         clearInterval(timerInterval);
@@ -296,15 +331,18 @@ if (startButton) {
           form.style.top = "50%";
           form.style.left = "50%";
           form.style.transform = "translate(-50%, -50%)";
-          form.style.width = "200px";
+          form.style.width = "400px";
+          form.style.height = "400px";
           form.style.padding = "20px";
           form.style.backgroundColor = "white";
-          form.style.border = "1px solid black";
+          form.style.border = "3px solid black";
+          form.style.borderRadius = "10px";
 
           // Create a new div element to display the score
           const scoreDiv = document.createElement("div");
           scoreDiv.textContent = `Score: ${currentScore}`;
           scoreDiv.style.marginBottom = "10px";
+          scoreDiv.style = "x-large";
           form.appendChild(scoreDiv);
 
           // Create the name input element
@@ -313,6 +351,8 @@ if (startButton) {
           nameInput.type = "text";
           nameInput.placeholder = "Enter your name";
           nameInput.style.marginBottom = "10px";
+          nameInput.style.width = "4%";
+          nameInput.style.height = "4%";
           form.appendChild(nameInput);
 
           // Creates the submit button for highscore
@@ -321,7 +361,31 @@ if (startButton) {
           submitHighscoreBtn.textContent = "Submit";
           submitHighscoreBtn.type = "submit";
           submitHighscoreBtn.style.marginBottom = "10px";
+          submitHighscoreBtn.style.width = "100%";
+          submitHighscoreBtn.style.padding = "10px";
+          submitHighscoreBtn.style.backgroundColor = "#ffff80";
+          submitHighscoreBtn.style.color = "black";
+          submitHighscoreBtn.style.fontSize = "x-large";
+          submitHighscoreBtn.style.border = "none";
+          submitHighscoreBtn.style.cursor = "pointer";
           form.appendChild(submitHighscoreBtn);
+
+          // Adds mouseover color effect to submit button
+          submitHighscoreBtn.addEventListener("mouseover", () => {
+            submitHighscoreBtn.style.backgroundColor = "#ffb366";
+          });
+
+          // Leaves a color for the background when removing mouse from button
+          submitHighscoreBtn.addEventListener("mouseout", () => {
+            submitHighscoreBtn.style.backgroundColor = "#ffff80";
+          });
+
+          // Adds some style to the name input box for submit highscore
+          nameInput.style.width = "100%";
+          nameInput.style.padding = "10px";
+          nameInput.style.marginBottom = "10px";
+          nameInput.style.border = "1px solid #ccc";
+          nameInput.style.borderRadius = "10px";
 
           // Attach the form to the document body
           document.body.appendChild(form);
@@ -340,8 +404,12 @@ if (startButton) {
               const highscore = { name, score: currentScore };
 
               // Get the current highscores array from localStorage
-              let highscores =
-                JSON.parse(localStorage.getItem("highscores"));
+              let highscores = JSON.parse(localStorage.getItem("highscores"));
+
+              // If highscores is null or undefined, initialize it with an empty array
+              if (!highscores) {
+                highscores = [];
+              }
 
               // Add the new highscore object to the array
               highscores.push(highscore);

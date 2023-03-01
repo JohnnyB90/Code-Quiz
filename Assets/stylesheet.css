@@ -1,8 +1,10 @@
+/* Adds overall body background as well as font style */
 body {
     font-family: 'Lato', sans-serif;
     background-color: lightgray;
   }
   
+  /* Adds styling to the header bar */
   header {
     display: flex;
     justify-content: space-between;
@@ -12,22 +14,7 @@ body {
     color: #fff;
   }
 
-  #highscorePage {
-    padding: 10px 20px;
-    background-color: #FFC3A1;
-    color: #222;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-
-  #highscores {
-    padding: 10px 20px;
-    background-color: #FFC3A1;
-    color: #222;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  
+  /* Styling for the timer display countdown */
   #timer-display {
     font-size: 24px;
     padding: 10px 20px;
@@ -37,6 +24,7 @@ body {
     border-radius: 5px;
   }
   
+  /* Styling for h1 elements */
   h1 {
     font-size: 48px;
     font-weight: 700;
@@ -45,18 +33,14 @@ body {
     text-align: center;
   }
   
-  p {
-    font-size: 18px;
-    margin-bottom: 30px;
-    text-align: center;
-  }
-  
+  /* Adds alignment to the text paragraph at the landing page */
   #start-paragraph-container {
     margin: 10% auto;
     width: 80%;
     text-align: center;
   }
   
+  /* Adds style to the start button */
   #start {
     padding: 15px 40px;
     background-color: #FFC3A1;
@@ -70,6 +54,7 @@ body {
     font-weight: bold;
   }
 
+  /* Adds style to the add highscore button */
   .quiz-button {
     padding: 15px 40px;
     background-color: #FFC3A1;
@@ -103,19 +88,58 @@ body {
     font-weight: bold;
   }
 
-  #highscores {
-    padding: 10px 20px;
-    font-size: 20px;
-    font-weight: bold;
-  }
 
+  
+  /* Styling for the landing page paragraph */
   p {
     padding: 10px 20px;
     font-size: 20px;
     font-weight: bold;
+    margin-bottom: 30px;
+    text-align: center;
+  }
+  
+  /* Adjusts the anwsers container text background colors etc. */
+  .score-container {
+    padding: 15px 40px;
+    background-color: #FFC3A1;
+    color: #222;
+    border-radius: 5px;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+    text-align: center;
+  }
+  
+  /* Adds text size to the anwsers */
+  .answer-label {
+    font-size: 22px;
+    font-weight: bold;
+    text-align: center;
+  }
+  
+  /* Will remove the hidden property from the form */
+  .hidden {
+    display: none;
+  }
+  
+  /* Allows adjusting the table */
+  .table-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 100px;
   }
 
-
+  /* Adds styling to the homepage button on the highscores page */
+  #highscores {
+    padding: 10px 20px;
+    font-size: 20px;
+    font-weight: bold;
+    background-color: #FFC3A1;
+    color: #222;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  /* Create a grid property on the table and adds 2 columns */
   .highscores-container {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -128,49 +152,34 @@ body {
     font-weight: bold;
   }
   
-  .score-container {
-    padding: 15px 40px;
-    background-color: #FFC3A1;
-    color: #222;
-    border-radius: 5px;
-    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
-    text-align: center;
-  }
-
-  .answer-label {
-    font-size: 22px;
-    font-weight: bold;
-    text-align: center;
-  }
   
-  .hidden {
-    display: none;
-  }
-
-
-  .table-container {
-    display: flex;
-    justify-content: center;
-    margin-top: 100px;
-  }
-  
+  /* Adds font size to the text and weight */
   #highscores-table {
     border-collapse: collapse;
     font-size: 22px;
     font-weight: bold;
   }
   
+  /* Adds a black border line below the table headers to seperate it from the scores, adds small amount of padding */
   #highscores-table th {
     padding: 10px;
     text-align: left;
     border-bottom: 2px solid black;
   }
   
+  /* Adds a bottom border line between each highscore with a small amount of padding */
   #highscores-table td {
     padding: 10px;
-    border-bottom: 1px solid #ddd;
+    border-bottom: 1px solid #b3b3b3;
   }
   
-  #highscores-table td:not(:first-child) {
-    padding-left: 20px;
+
+  /* Spreads the table headers from one another */
+  #highscores-table th {
+    padding: 10px 250px;
+  }
+
+  /* Centers the table data */
+  tbody {
+    text-align: center;
   }

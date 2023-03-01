@@ -3,24 +3,31 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Tab page title -->
   <title>Code Quiz</title>
+  <!-- Stylesheet Link -->
   <link href="https://fonts.googleapis.com/css?family=Lato:400,700&display=swap" rel="stylesheet">
   <link href="./Assets/stylesheet.css" rel="stylesheet">
 </head>
 <body>
   <header>
+    <!-- View highscores page button -->
     <button id="highscores" onclick="window.location.href='highscores.html'">View Highscores</button>
+    <!-- Timer display element to be set on js sheet -->
     <div id="timer-display">00:00</div>
   </header>
   <div id="start-paragraph-container">
+    <!-- Coding Quiz Header -->
     <h1>Coding Quiz Challenge</h1>
     <p>Try to answer the following code-related questions within the time limit. Keep in mind that incorrect answers will penalize your score time by ten seconds!</p>
+    <!-- Begin the quiz button -->
     <button id="start">Start Quiz</button>
   </div>
   <form id="highscore-form" class="hidden">
   <button id="submit-highscore-btn">Submit</button>
   </form>
   </div>
+  <!-- JS script link -->
   <script src="./Assets/script.js"></script>
 </body>
 </html>
